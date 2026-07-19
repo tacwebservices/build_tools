@@ -1297,7 +1297,8 @@ def run_as_bat(lines, is_no_errors=False):
   if ("windows" != host_platform()):
     os.system("chmod +x " + name)
 
-  cmd(name, [], is_no_errors)
+  run_name = (".\\" + name) if ("windows" == host_platform()) else name
+  cmd(run_name, [], is_no_errors)
   delete_file(name)
   return
 
@@ -1310,7 +1311,7 @@ def run_as_bat_win_isolate(lines, is_no_errors=False):
   file2.write("start /wait /min tmp.bat")
   file2.close()
 
-  cmd("tmp2.bat", [], is_no_errors)
+  cmd(".\\tmp2.bat", [], is_no_errors)
   delete_file("tmp.bat")
   delete_file("tmp2.bat")
   return

@@ -60,6 +60,8 @@ def make():
     platformToolset = "v140"
     if (config.option("vs-version") == "2019"):
       platformToolset = "v142"
+    if base.is_dir("C:/BuildTools/VC/Tools/MSVC/14.44.35207"):
+      platformToolset = "v143"
     need_platforms = []
     if (-1 != config.option("platform").find("win_64")):
       need_platforms.append("win_64")
@@ -109,6 +111,10 @@ def make():
       base.copy_file(platform_args['out_bin_dir'] + "icuuc" + icu_major + ".dll", out_dir)
       base.copy_file(platform_args['out_lib_dir'] + "icudt.lib", out_dir)
       base.copy_file(platform_args['out_lib_dir'] + "icuuc.lib", out_dir)
+
+      base.create_dir(source_dir + "/include/unicode")
+      base.copy_dir_content(source_dir + "/source/common/unicode", source_dir + "/include/unicode")
+      base.copy_dir_content(source_dir + "/source/i18n/unicode", source_dir + "/include/unicode")
 
     for platform in need_platforms:
       if not config.check_option("platform", platform) and not config.check_option("platform", platform + "_xp"):

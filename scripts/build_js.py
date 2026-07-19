@@ -126,6 +126,8 @@ def _run_build_py(directory, params=[]):
       directory_result = directory_branding
   if (base.is_file(directory_result + "/package.json")):
     _run_npm_ci(directory_result)
+  if not base.is_file(directory_result + "/build.py"):
+    return _run_grunt(directory_result, params)
   return base.cmd_in_dir(directory_result, "python", ["build.py"] + params)
 
 def build_interface(directory):

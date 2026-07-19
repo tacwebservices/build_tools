@@ -30,6 +30,8 @@ def get_vs_version():
   vs_version = "14 2015"
   if config.option("vs-version") == "2019":
     vs_version = "16 2019"
+  if base.is_dir("C:/BuildTools/VC/Tools/MSVC/14.44.35207"):
+    vs_version = "17 2022"
   return vs_version
 
 def get_xcode_sdk(platform):
