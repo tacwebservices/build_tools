@@ -3,6 +3,7 @@
 import config
 import base
 import os
+import sys
 import platform
 import glob
 
@@ -242,6 +243,14 @@ def make():
     #base.copy_dir(git_dir + "/desktop-sdk/ChromiumBasedEditors/plugins/encrypt/ui/common/{14A8FC87-8E26-4216-B34E-F27F053B2EC4}", root_dir + "/editors/sdkjs-plugins/{14A8FC87-8E26-4216-B34E-F27F053B2EC4}")
     #base.copy_dir(git_dir + "/desktop-sdk/ChromiumBasedEditors/plugins/encrypt/ui/engine/database/{9AB4BBA8-A7E5-48D5-B683-ECE76A020BB1}", root_dir + "/editors/sdkjs-plugins/{9AB4BBA8-A7E5-48D5-B683-ECE76A020BB1}")
     base.copy_sdkjs_plugin(git_dir + "/desktop-sdk/ChromiumBasedEditors/plugins", root_dir + "/editors/sdkjs-plugins", "sendto", True)
+
+    # Personal Office AI plugins (Ask Personal Office, Write with Personal Office),
+    # from a DocumentServer checkout next to this one
+    personal_office_plugins = git_dir + "/DocumentServer/plugins/install.py"
+    if base.is_file(personal_office_plugins):
+      base.cmd(sys.executable, [personal_office_plugins, root_dir + "/editors/sdkjs-plugins"])
+    else:
+      print("Personal Office plugins not found at " + personal_office_plugins + ", skipping")
 
     isUseAgent = True
     if isWindowsXP:
